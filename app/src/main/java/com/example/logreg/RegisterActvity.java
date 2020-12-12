@@ -31,8 +31,15 @@ public class RegisterActvity extends AppCompatActivity {
                 startActivity(elso);
                 finish();
             }
-        })
-        ;}
+        });
+        regisztracio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DBHelper h = new DBHelper(null, null, null, 1);
+                h.adatRogzites(email.getText().toString(), felhasznalonev.getText().toString(), jelszo.getText().toString(), teljesnev.getText().toString());
+            }
+        });
+        }
 
 
     private void init() {
