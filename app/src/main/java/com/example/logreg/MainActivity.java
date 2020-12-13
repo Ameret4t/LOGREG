@@ -9,9 +9,11 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,13 +42,18 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent masodik = new Intent(MainActivity.this,
+                if (TextUtils.isEmpty((CharSequence) felhasznalonev) || TextUtils.isEmpty((CharSequence) jelszo)){
+                    Toast.makeText(MainActivity.this, "Nem hagyhat uresen mezot", Toast.LENGTH_SHORT).show();
+                }else{Intent masodik = new Intent(MainActivity.this,
                         LoggedInActivity.class);
-                startActivity(masodik);
-                finish();
+                    startActivity(masodik);
+                    finish();}
+
             }
-        })
-    ;}
+        });
+
+
+    }
 
     private void init() {
         felhasznalonev = findViewById(R.id.felhasznalonev);

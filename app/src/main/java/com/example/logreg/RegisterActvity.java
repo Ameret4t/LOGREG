@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegisterActvity extends AppCompatActivity {
 
@@ -16,6 +18,8 @@ public class RegisterActvity extends AppCompatActivity {
     private EditText teljesnev;
     private Button regisztracio;
     private Button vissza;
+
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,21 @@ public class RegisterActvity extends AppCompatActivity {
             }
         });
         regisztracio.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                DBHelper h = new DBHelper(null, null, null, 1);
-                h.adatRogzites(email.getText().toString(), felhasznalonev.getText().toString(), jelszo.getText().toString(), teljesnev.getText().toString());
+                if ((TextUtils.isEmpty((CharSequence) felhasznalonev) || TextUtils.isEmpty((CharSequence) jelszo) || TextUtils.isEmpty((CharSequence) email ) || TextUtils.isEmpty((CharSequence) teljesnev))){
+                    Toast.makeText(RegisterActvity.this, "Nem hagyhat uresen mezot", Toast.LENGTH_SHORT).show();
+                }else if((email.getText().toString().trim().matches(emailPattern))){
+                    Toast.makeText(RegisterActvity.this, "Ervenytelen email cim!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    DBHelper h = new DBHelper(null, null, null, 1);
+                    if (h.adatRogzites(email.getText().toString(), felhasznalonev.getText().toString(), jelszo.getText().toString(), teljesnev.getText().toString())){
+                        h.adatRogzites(email.getText().toString(), felhasznalonev.getText().toString(), jelszo.getText().toString(), teljesnev.getText().toString());
+                        Toast.makeText(RegisterActvity.this, "Sikeres felvetel", Toast.LENGTH_SHORT).show();}
+                    else{Toast.makeText(RegisterActvity.this, "Sikertelen felvetel", Toast.LENGTH_SHORT).show();}}
+
             }
         });
         }

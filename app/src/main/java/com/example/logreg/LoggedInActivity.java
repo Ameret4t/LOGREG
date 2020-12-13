@@ -17,6 +17,10 @@ public class LoggedInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
+        init();
+
+        DBHelper h = new DBHelper(null,null,null,1);
+        userteljesnev.setText(h.nevLekerdezes());
 
         kijelentkezes.setOnClickListener(new View.OnClickListener() {
             @Override
